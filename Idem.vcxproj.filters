@@ -48,5 +48,8 @@
     <ClCompile Include="..\..\Libs\Units\Source\SlyvSTOI.cpp">
       <Filter>Source Files\Slyvina\Units</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Libs\Units\Source\SlyvBank.cpp">
+      <Filter>Source Files\Slyvina\Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

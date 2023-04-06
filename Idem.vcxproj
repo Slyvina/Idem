@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Libs\Units\Source\SlyvArgParse.cpp" />
+    <ClCompile Include="..\..\Libs\Units\Source\SlyvBank.cpp" />
     <ClCompile Include="..\..\Libs\Units\Source\SlyvDir.cpp" />
     <ClCompile Include="..\..\Libs\Units\Source\SlyvMD5.cpp" />
     <ClCompile Include="..\..\Libs\Units\Source\SlyvSTOI.cpp" />
