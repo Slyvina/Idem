@@ -4,7 +4,7 @@
 // 
 // 
 // 
-// (c) Jeroen P. Broks, 2023
+// (c) Jeroen P. Broks, 2023, 2024
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.04.06
+// Version: 24.03.22
 // EndLic
 #include <Slyvina.hpp>
 #include <SlyvString.hpp>
@@ -61,14 +61,26 @@ namespace Idem {
 		for (auto file : *files) {
 			auto tfile{ tdir + "/" + file };
 			cout << "Checking:  " << dName(tfile) << "\r";
-			auto size{ FileSize(tfile) };
-			//int asize; if (size > 1000000) asize = 1000000; else asize = (int)size; 
-			//auto content = LoadCharBuf(tfile); for(size_t i=0;i<size;i++) if (content[i]==0) content[i]=1)
-			auto content = FLoadString(tfile, true);
-			//auto hash = md5((uint8_t*)content, asize); //qc_md5(content.c_str());
-			auto hash = md5(content);
-			auto tag{ hash + ":" + to_string(size) };
-			Result[tag].push_back(tfile);
+			auto Ok = true;
+			for (size_t p = 0; p < tfile.size(); p++) {
+				Ok = Ok && tfile[p] >= 32 && tfile[p] <= 126;
+			}
+			if (Ok) {
+				auto size{ FileSize(tfile) };
+				if (size) {
+					//int asize; if (size > 1000000) asize = 1000000; else asize = (int)size; 
+					//auto content = LoadCharBuf(tfile); for(size_t i=0;i<size;i++) if (content[i]==0) content[i]=1)
+					auto content = FLoadString(tfile, true);
+					//auto hash = md5((uint8_t*)content, asize); //qc_md5(content.c_str());
+					auto hash = md5(content.substr(0, 12000));
+					auto tag{ hash + ":" + to_string(size) };
+					Result[tag].push_back(tfile);
+				} else {
+					cout << "Empty file: " << file << "\n";
+				}
+			} else {
+				cout << "Error: " << file << " (Non-ASCII characters in filename)\n\7";
+			}
 		}
 		cout << "           " << dName("") << "\r";
 		return 0;
@@ -79,7 +91,7 @@ namespace Idem {
 int main(int argc, char** args) {
 	using namespace Idem;
 	cout << "Idem - Coded by: Tricky\n";
-	cout << "(c) Copyright 2023 Jeroen P. Broks\n";
+	cout << "(c) Copyright" << CYear(2023, Right(__DATE__, 4)) << "  Jeroen P.Broks\n";
 	cout << "Build: " << __DATE__ << "; " << __TIME__ << "\n\n";
 	FlagConfig FC{};
 	Args = ParseArg(argc, args, FC);
