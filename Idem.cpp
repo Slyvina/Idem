@@ -91,7 +91,7 @@ namespace Idem {
 int main(int argc, char** args) {
 	using namespace Idem;
 	cout << "Idem - Coded by: Tricky\n";
-	cout << "(c) Copyright" << CYear(2023, Right(__DATE__, 4)) << "  Jeroen P.Broks\n";
+	cout << "(c) Copyright " << CYear(2023, Right(__DATE__, 4)) << " Jeroen P.Broks\n";
 	cout << "Build: " << __DATE__ << "; " << __TIME__ << "\n\n";
 	FlagConfig FC{};
 	Args = ParseArg(argc, args, FC);
